@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="nav">
+  <a href="{{ url_for('dashboard') }}">Home</a> |
+  <a href="{{ url_for('add_course') }}">Add Course</a> |
+  <a href="{{ url_for('add_assignment') }}">Add Assignment</a> |
+  <a href="{{ url_for('help_page') }}">Help</a>
+</nav>
+
+<h2 class="title">Add New Course</h2>
+
+<form method="post" class="form" aria-label="Add course form">
+  <label for="title">Course Title:</label>
+  <input id="title" name="title" type="text" value="{{ title or '' }}" required placeholder="CS 340, Intro. to Databases" />
+
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" rows="4" placeholder="Design and implementation of relational databases...">{{ description or '' }}</textarea>
+
+  <div class="row">
+    <button class="btn btn-primary" type="submit">Save Course</button>
+    <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

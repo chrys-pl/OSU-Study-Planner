@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="nav">
+  <a href="{{ url_for('dashboard') }}">Home</a> |
+  <a href="{{ url_for('add_course') }}">Add Course</a> |
+  <a href="{{ url_for('add_assignment') }}">Add Assignment</a> |
+  <a href="{{ url_for('help_page') }}">Help</a>
+</nav>
+
+<h2 class="title">Welcome, {{ username or 'Student' }}!</h2>
+
+<!-- IH#7: Toggle between Card View and List View -->
+<div class="view-toggle">
+  <button id="toggleView" class="btn btn-outline">Toggle View</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("toggleView");
+    const grid = document.querySelector(".grid");
+    btn.addEventListener("click", () => {
+      grid.classList.toggle("list-view");
+    });
+  });
+</script>
+
+<section class="grid">
+  <div class="panel">
+    <h3>Courses:</h3>
+    {% if courses|length == 0 %}
+      <p class="muted">No courses yet. Use “Add Course”.</p>
+    {% endif %}
+    <ul class="cards">
+      {% for c in courses %}
+        <!-- IH#3: Click to expand for more info -->
+        <li class="card course" onclick="this.classList.toggle('expanded')">
+          <div class="course-title">{{ c.title }}</div>
+          {% if c.description %}
+            <div class="course-desc hidden">{{ c.description }}</div>
+          {% endif %}
+          <form method="post" action="{{ url_for('delete_course', course_id=c.id) }}"
+                onsubmit="return confirm('Delete this course? All data will be lost permanently.');">
+            <button class="btn btn-danger" aria-label="Delete course {{ c.title }}">X Delete Course</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>Assignments:</h3>
+    {% if assignments|length == 0 %}
+      <p class="muted">No assignments yet. Use “Add Assignment”.</p>
+    {% endif %}
+    <ul class="cards">
+      {% for a in assignments %}
+        <li class="card assignment {% if a.is_complete %}complete{% endif %}">
+          <div class="assignment-title">
+            {{ a.title }}
+            {% if a.course_title %}
+              <span class="pill">{{ a.course_title }}</span>
+            {% endif %}
+          </div>
+          <div class="assignment-meta">
+            {% if a.due_date %}
+              Due: {{ a.due_date }}
+            {% else %}
+              <span class="muted">No due date</span>
+            {% endif %}
+          </div>
+          <div class="row">
+            <form method="post" action="{{ url_for('toggle_assignment_complete', assignment_id=a.id) }}">
+              <button class="btn btn-secondary">
+                {% if a.is_complete %}✓ Mark Incomplete{% else %}✓ Mark Complete{% endif %}
+              </button>
+            </form>
+            <form method="post" action="{{ url_for('delete_assignment', assignment_id=a.id) }}"
+                  onsubmit="return confirm('Delete this assignment? All data will be lost permanently.');">
+              <button class="btn btn-danger" aria-label="Delete assignment {{ a.title }}">X</button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<div class="footer">
+  <a class="btn btn-outline" href="{{ url_for('login') }}">BACK TO HOME</a>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="nav">
+  <a href="{{ url_for('dashboard') }}">Home</a> |
+  <a href="{{ url_for('add_course') }}">Add Course</a> |
+  <a href="{{ url_for('add_assignment') }}">Add Assignment</a> |
+  <a href="{{ url_for('help_page') }}">Help</a>
+</nav>
+
+<h2 class="title">⚙ Help</h2>
+
+<ul class="help-list">
+  <li>Start by signing in from the main page with any username and password.</li>
+  <li>The Home Dashboard shows all your courses and assignments.</li>
+  <li>Click “Add Course” or “Add Assignment” to create new entries.</li>
+  <li>Click a course to view more details, or toggle between Card/List view.</li>
+  <li>Mark assignments as complete or delete them when finished.</li>
+  <li>Each delete action requires confirmation to prevent accidental loss.</li>
+  <li>If you ever feel lost, this Help page provides explicit guidance.</li>
+</ul>
+
+<div class="footer">
+  <a class="btn btn-outline" href="{{ url_for('login') }}">BACK TO HOME</a>
+</div>
+{% endblock %}

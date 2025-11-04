@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="nav">
+  <a href="{{ url_for('dashboard') }}">Home</a> |
+  <a href="{{ url_for('add_course') }}">Add Course</a> |
+  <a href="{{ url_for('add_assignment') }}">Add Assignment</a> |
+  <a href="{{ url_for('help_page') }}">Help</a>
+</nav>
+
+<h2 class="title">Add New Assignment</h2>
+
+<form method="post" class="form" aria-label="Add assignment form">
+  <label for="title">Assignment Title:</label>
+  <input id="title" name="title" type="text" required placeholder="Assignment #1" value="{{ title or '' }}" />
+
+  <label for="course_id">Course:</label>
+  <select id="course_id" name="course_id" aria-label="Select course">
+    <option value="">— None —</option>
+    {% for c in courses %}
+      <option value="{{ c.id }}">{{ c.title }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="due_date">Due Date:</label>
+  <input id="due_date" name="due_date" type="date" value="{{ due_date or '' }}"/>
+
+  <div class="row">
+    <button class="btn btn-primary" type="submit">Save Assignment</button>
+    <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

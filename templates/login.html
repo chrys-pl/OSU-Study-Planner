@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card card--large" style="padding: 50px 60px; text-align: center; margin-top: 60px;">
+  <h1 class="logo" style="font-size: 60px; margin-bottom: 40px; line-height: 1.1;">
+    OSU<br><span>Study</span><br><span>Planner</span>
+  </h1>
+
+  <!-- Simplified entry form -->
+  <form action="{{ url_for('dashboard') }}" method="get" class="form" aria-label="Start app form" style="margin-bottom: 40px;">
+    <button class="btn btn-primary" type="submit" style="font-size: 20px; padding: 14px 28px;">ENTER PLANNER</button>
+  </form>
+
+  <p class="tagline" style="font-size: 20px; margin-bottom: 24px; line-height: 1.5;">
+    <strong>Welcome to the OSU Study Planner!</strong><br>
+    Keep track of your <strong>courses</strong> and <strong>assignments</strong>,
+    mark them as complete, and stay on top of deadlines with this simple, organized tool.
+  </p>
+
+  <p class="tagline" style="font-size: 18px; line-height: 1.6; color: #333;">
+    Using this planner helps you manage your workload, plan ahead, and
+    visualize your academic progress throughout the term.
+  </p>
+</section>
+{% endblock %}
+
